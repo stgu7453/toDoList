@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_list.dart';
 
 class AddTaskScreen extends StatelessWidget {
-
-  final Function addTaskCallback;
-
-  AddTaskScreen({this.addTaskCallback});
 
   final TextEditingController taskTitleController = TextEditingController();
 
@@ -47,7 +45,8 @@ class AddTaskScreen extends StatelessWidget {
               FlatButton(
                   onPressed: (){
                     if(taskTitleController.text != ""){
-                      addTaskCallback(taskTitleController.text);
+                      Provider.of<TaskList>(context).addTask(taskTitleController.text);
+                      Navigator.pop(context);
                     }
                   },
                   color: Colors.lightBlueAccent,

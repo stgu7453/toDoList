@@ -1,25 +1,34 @@
 import 'package:flutter/foundation.dart';
 import 'package:todoey/models/task.dart';
-import 'package:todoey/models/task.dart';
+import 'dart:collection';
 
 class TaskList extends ChangeNotifier {
-  List<Task> tasks = [
+  List<Task> _tasks = [
     Task(name: "Buy Milk"),
     Task(name: "Buy eggs"),
     Task(name: "Buy bread"),
   ];
 
-  int get taskCount {
-    return tasks.length;
+  UnmodifiableListView<Task> get tasks {
+    return UnmodifiableListView(_tasks);
   }
 
-  changeState(int index){
-    tasks[index].toggleDone();
+  int get taskCount {
+    return _tasks.length;
+  }
+
+  changeState(Task task){
+    task.toggleDone();
     notifyListeners();
   }
 
   addTask(String title){
-    tasks.add(Task(name: title));
+    _tasks.add(Task(name: title));
+    notifyListeners();
+  }
+
+  deleteTask(Task task){
+    _tasks.remove(task);
     notifyListeners();
   }
 }

@@ -10,11 +10,15 @@ class TasksList extends StatelessWidget {
       builder: (context, taskData, child){
         return ListView.builder(
           itemBuilder: (context, index){
+            final task = taskData.tasks[index];
             return TaskTile(
-              title: taskData.tasks[index].name,
-              isChecked: taskData.tasks[index].isDone,
+              title: task.name,
+              isChecked: task.isDone,
               checkBoxCallback: (value){
-                taskData.changeState(index);
+                taskData.changeState(task);
+              },
+              longPressCallback: (){
+                taskData.deleteTask(task);
               },
             );
           },
